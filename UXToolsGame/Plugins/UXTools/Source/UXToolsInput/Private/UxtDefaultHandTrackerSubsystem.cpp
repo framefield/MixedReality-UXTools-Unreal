@@ -40,7 +40,7 @@ void UUxtDefaultHandTrackerSubsystem::Deinitialize()
 	DefaultHandTracker.UnregisterInputMappings(InputMappingContext);
 }
 
-void UUxtDefaultHandTrackerSubsystem::OnGameModePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer)
+void UUxtDefaultHandTrackerSubsystem::SetupForLocalPlayer(APlayerController* NewPlayer)
 {
 	if (NewPlayer->IsLocalController())
 	{
@@ -85,6 +85,11 @@ void UUxtDefaultHandTrackerSubsystem::OnGameModePostLogin(AGameModeBase* GameMod
 
 		IModularFeatures::Get().RegisterModularFeature(IUxtHandTracker::GetModularFeatureName(), &DefaultHandTracker);
 	}
+}
+
+void UUxtDefaultHandTrackerSubsystem::OnGameModePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer)
+{
+	SetupForLocalPlayer(NewPlayer);
 }
 
 void UUxtDefaultHandTrackerSubsystem::OnGameModeLogout(AGameModeBase* GameMode, AController* Exiting)

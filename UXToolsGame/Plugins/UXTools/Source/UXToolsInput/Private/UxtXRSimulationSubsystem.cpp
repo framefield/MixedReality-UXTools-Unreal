@@ -66,7 +66,7 @@ bool UUxtXRSimulationSubsystem::GetHeadPose(FQuat& OutHeadRotation, FVector& Out
 	return false;
 }
 
-void UUxtXRSimulationSubsystem::OnGameModePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer)
+void UUxtXRSimulationSubsystem::SetupSimulationForLocalPlayer(APlayerController* NewPlayer)
 {
 	if (NewPlayer->IsLocalController())
 	{
@@ -98,6 +98,11 @@ void UUxtXRSimulationSubsystem::OnGameModePostLogin(AGameModeBase* GameMode, APl
 			GetOrCreateHmdCameraActor(NewPlayer);
 		}
 	}
+}
+
+void UUxtXRSimulationSubsystem::OnGameModePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer)
+{
+	SetupSimulationForLocalPlayer(NewPlayer);
 }
 
 void UUxtXRSimulationSubsystem::OnGameModeLogout(AGameModeBase* GameMode, AController* Exiting)

@@ -12,6 +12,7 @@
 #include "Input/UxtInputSubsystem.h"
 #include "Interactions/UxtFarTarget.h"
 #include "Interactions/UxtInteractionUtils.h"
+#include "Kismet/GameplayStatics.h"
 #include "Materials/MaterialParameterCollectionInstance.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Utils/UxtFunctionLibrary.h"
@@ -143,10 +144,14 @@ void UUxtFarPointerComponent::OnPointerPoseUpdated(const FQuat& NewOrientation, 
 		FVector End = Start + Forward * RayLength;
 
 		// Query for simple collision volumes
-		FCollisionQueryParams QueryParams(NAME_None, false);
+		FCollisionQueryParams QueryParams(NAME_None, true);
+		QueryParams.bReturnFaceIndex = true;
 		GetWorld()->LineTraceSingleByChannel(Hit, Start, End, TraceChannel, QueryParams);
 
+		UGameplayStatics::FindCollisionUV(Hit, 0, HitUV);
+
 		NewPrimitive = Hit.GetComponent();
+
 
 		if (NewPrimitive != OldPrimitive)
 		{
@@ -283,6 +288,11 @@ FVector UUxtFarPointerComponent::GetHitPoint() const
 FVector UUxtFarPointerComponent::GetHitNormal() const
 {
 	return HitNormal;
+}
+
+FVector2D UUxtFarPointerComponent::GetHitUV() const
+{
+	return HitUV;
 }
 
 bool UUxtFarPointerComponent::IsPressed() const

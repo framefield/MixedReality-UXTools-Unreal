@@ -57,6 +57,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Uxt Far Pointer")
 	FVector GetHitNormal() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Uxt Far Pointer")
+	FVector2D GetHitUV() const;
+
 	/** Whether the pointer is currently pressed. */
 	UFUNCTION(BlueprintCallable, Category = "Uxt Far Pointer")
 	bool IsPressed() const;
@@ -130,6 +133,7 @@ private:
 	TWeakObjectPtr<UPrimitiveComponent> HitPrimitiveWeak;
 	FVector HitPoint = FVector::ZeroVector;
 	FVector HitNormal = FVector::BackwardVector;
+	FVector2D HitUV = FVector2D::ZeroVector;
 
 	// Hit information in the primitive space. Used to keep the hit relative to the primitive while the pointer is locked.
 	FVector HitPointLocal = FVector::ZeroVector;

@@ -234,6 +234,14 @@ void AUxtHandInteractionActor::Tick(float DeltaTime)
 		return;
 	}
 
+	FQuat rot;
+	FVector pos;
+	if (IUxtHandTracker::Get().GetPointerPose(Hand, rot, pos))
+	{
+		HandPosition = pos;
+		HandRotation = FRotator(rot);
+	}
+
 	bool bNewNearPointerActive = NearPointer->IsActive();
 	bool bNewFarPointerActive = FarPointer->IsActive();
 	bool bHasNearTarget;

@@ -29,6 +29,9 @@ public:
 
 	bool GetHeadPose(FQuat& OutHeadRotation, FVector& OutHeadPosition) const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetupSimulationForLocalPlayer(APlayerController* NewPlayer);
+
 private:
 	void OnGameModePostLogin(AGameModeBase* GameMode, APlayerController* NewPlayer);
 	void OnGameModeLogout(AGameModeBase* GameMode, AController* Exiting);

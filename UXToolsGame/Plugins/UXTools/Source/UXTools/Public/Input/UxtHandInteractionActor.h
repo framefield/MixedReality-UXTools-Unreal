@@ -105,6 +105,12 @@ public:
 		Transient, EditAnywhere, BlueprintReadWrite, Category = "Uxt Hand Interaction", meta = (Bitmask, BitmaskEnum = EUxtInteractionMode))
 	int32 InteractionMode = static_cast<int32>(EUxtInteractionMode::Near | EUxtInteractionMode::Far);
 
+	UPROPERTY(BlueprintReadOnly)
+	FVector HandPosition;
+	
+	UPROPERTY(BlueprintReadOnly)
+	FRotator HandRotation;
+
 private:
 	/** Generates a cone-shaped mesh for proximity testing. */
 	void UpdateProximityMesh();
