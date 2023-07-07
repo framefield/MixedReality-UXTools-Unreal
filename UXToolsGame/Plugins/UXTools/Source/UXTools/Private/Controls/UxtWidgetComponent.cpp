@@ -166,17 +166,20 @@ void UUxtWidgetComponent::OnUpdatedFarFocus_Implementation(UUxtFarPointerCompone
 
 void UUxtWidgetComponent::OnExitFarFocus_Implementation(UUxtFarPointerComponent* Pointer)
 {
+	FVector ClosestPoint;
+	UWidgetComponent* Widget = GetFarFocusedWidget(Pointer, ClosestPoint);
+
+	// Primitive should be castable to widget component as this is a condition in IsFarFocusable.
+	// If this check fails, a non far focusable object has received focus.
+	check(Widget);
+
 	if (bIsPressed && Pointers.Num() == 1)
 	{
-		FVector ClosestPoint;
-		UWidgetComponent* Widget = GetFarFocusedWidget(Pointer, ClosestPoint);
-
-		// Primitive should be castable to widget component as this is a condition in IsFarFocusable.
-		// If this check fails, a non far focusable object has received focus.
-		check(Widget);
-
 		PointerUp(ClosestPoint, Pointer, Widget);
 	}
+
+	// Move pointer out of widget. Not sure if this cover all edge cases.
+	PointerMove(FVector(0, 0, 0), Pointer, Widget);
 
 	Pointers.Remove(Pointer);
 }
